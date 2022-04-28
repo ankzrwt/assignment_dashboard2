@@ -1,0 +1,14 @@
+Commands to run this project :
+
+1. pipenv shell
+
+Now install all the dependency
+2.pipenv install django
+3. pipenv install django-debug-toolbar
+4.pipenv install django-tailwind
+5.pipenv install more_itertools
+
+If you are runnning project for first time :
+6. python manage.py runserver seed 
+
+7.python manage.py runserver
