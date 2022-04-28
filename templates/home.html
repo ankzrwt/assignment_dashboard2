@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h1 class="text-lg font-bold">Covid-19 Vaccination Dashboard</h1>
+
+<div class="mt-4 grid gap-4 gris-cols-1 lg:grid-cols-2">
+  <div class="bg-white sm:rounded-md shadow -mx-4 sm:mx-0 px-4 py-3">
+    <h3 class="font-medium">People vaccinated per hundred</h3>
+    <div class="mt-2 h-96">
+      <canvas id="barChart" data-url="{% url 'mostVacicinatedCountry' %}"></canvas>
+    </div>
+  </div>
+
+  <div class="bg-white sm:rounded-md shadow  -mx-4 sm:mx-0 px-4 py-3">
+    <h3 class="font-medium">Contries with best vaccination drive</h3>
+    <div class="mt-2 h-96">
+      <canvas id="pieChart" data-url="{% url 'piechart' %}"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4 grid gap-4 gris-cols-1 lg:grid-cols-2">
+  <div class="bg-white sm:rounded-md shadow -mx-4 sm:mx-0 px-4 py-3">
+    <h1 class="font-bold text-lg">Summary</h1>
+    <h2 class="font-bold mt-2">Most Commonly used vaccines</h2>
+    <div class="mt-2" >
+      {% for k in uniqueVaccine %}
+        <div class="font-light inline-block" style="display:inline-block"><li>{{k}}</li> </div>
+    {% endfor %}
+    </div>
+    <h2 class="font-bold mt-3">Vaccines Shots</h2>
+    <div class="mt-2 font-medium" >Total Number of Vaccines shot given till date : {{total_vaccines}}</div>
+    <div class="mt-2 font-medium" >Max number of Vaccines shots in one day ( Country ) : {{max_Vaccine_Shots_By_Country_In_One_Day}}</div>
+    <div class="mt-2 font-medium" >Total Number of countries : {{countries}}</div>
+    <div class="mt-2 font-medium" >Countries with least number of toal vaccinations : {{countriesWithLeastNoOfTotalVaccines}}</div>
+    <div class="mt-2 font-medium" >Countries with Most number of toal vaccinations : {{countriesWithMostNoOfTotalVaccines}}</div>
+    
+</div>
+<div class="bg-white sm:rounded-md shadow -mx-4 sm:mx-0 px-4 py-3">
+  <h3 class="font-medium">Total Vaccination</h3>
+  <div class="mt-2 h-96">
+    <canvas id="lineChart" data-url="{% url 'linechart' %}"></canvas>
+  </div>
+  
+</div>
+
+<!-- Chart.js -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.0/chart.min.js"
+  integrity="sha512-RGbSeD/jDcZBWNsI1VCvdjcDULuSfWTtIva2ek5FtteXeSjLfXac4kqkDRHVGf1TwsXCAqPTF7/EYITD0/CTqw=="
+  crossorigin="anonymous"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="{% static 'js/charts.js' %}"></script>
+
+
+
+<script>
+  let barChart = document.getElementById("barChart");
+  drawBarChart(barChart)
+  let pieChart = document.getElementById("pieChart");
+  drawPieChart(pieChart)
+  let lineChart = document.getElementById("lineChart");
+  drawChart(lineChart)
+</script>
+
+{% endblock %}
